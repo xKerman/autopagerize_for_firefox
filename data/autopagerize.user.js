@@ -425,7 +425,7 @@ AutoPager.launchAutoPager = function(list) {
 
 AutoPager.rebootAutoPager = function() {
     if (!ap) {
-        return;
+        return
     }
     var info = ap.info
     ap.terminate()
