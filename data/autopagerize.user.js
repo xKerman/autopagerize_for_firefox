@@ -793,7 +793,7 @@ function createHTMLDocumentByString(str) {
         base: true,
         isindex: true
     }
-    var child = null
+    var child
     while ((child = fragment.firstChild)) {
         if ((child.nodeType == child.ELEMENT_NODE && !(child.nodeName.toLowerCase() in headChildNames)) ||
             (child.nodeType == child.TEXT_NODE && /\S/.test(child.nodeValue))) {
