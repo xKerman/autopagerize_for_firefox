@@ -14,7 +14,7 @@
 // http://www.gnu.org/copyleft/gpl.html
 //
 //
-// A portion of createHTMLDocumentByString() function is under the MIT License.
+// A portion of createHTMLDocumentByString() function is:
 // Copyright (c) 2009 Hatena Co., Ltd
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
