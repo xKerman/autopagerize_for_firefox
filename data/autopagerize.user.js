@@ -345,6 +345,9 @@ AutoPager.prototype.getNextURL = function(xpath, doc, url) {
     if (nextLink) {
         var nextValue = nextLink.getAttribute('href') ||
             nextLink.getAttribute('action') || nextLink.value
+        if (!nextValue) {
+            return null
+        }
         if (nextValue.match(/^http(s)?:/)) {
             return nextValue
         }
