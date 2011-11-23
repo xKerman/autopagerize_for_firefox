@@ -792,7 +792,8 @@ function createHTMLDocumentByString(str) {
         link: true,
         script: true,
         style: true,
-        base: true
+        base: true,
+        command: true
     }
     var child
     while ((child = fragment.firstChild)) {
