@@ -346,6 +346,7 @@ AutoPager.prototype.getNextURL = function(xpath, doc, url) {
         var nextValue = nextLink.getAttribute('href') ||
             nextLink.getAttribute('action') || nextLink.value
         if (!nextValue) {
+            debug('nextLink has no href, action, or value attribute', nextLink)
             return null
         }
         if (nextValue.match(/^http(s)?:/)) {
