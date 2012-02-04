@@ -209,7 +209,7 @@ AutoPager.prototype.request = function() {
 
     this.lastRequestURL = this.requestURL
     this.showLoading(true)
-    if (Extension.isFirefox() && isSameDomain(this.requestURL)) {
+    if (Extension.isFirefox() && isSameOrigin(this.requestURL)) {
         var req = XMLHttpRequest()
         // In order to prevent cross domain redirection,
         // we have to meet the condition of CORS preflight request.
@@ -254,7 +254,7 @@ AutoPager.prototype.showLoading = function(sw) {
 }
 
 AutoPager.prototype.load = function(htmlDoc, url) {
-    if (url && !isSameDomain(url)) {
+    if (url && !isSameOrigin(url)) {
         this.error()
         return
     }
@@ -636,13 +636,10 @@ function getScrollHeight() {
                                 document.body.scrollHeight)
 }
 
-function isSameDomain(url) {
-    if (url.match(/^\w+:/)) {
-        return location.host == url.split('/')[2]
-    }
-    else {
-        return true
-    }
+function isSameOrigin(url) {
+    var a = document.createElement('a')
+    a.href = url
+    return a.protocol == location.protocol && a.host == location.host
 }
 
 function isSameBaseUrl(urlA, urlB) {
