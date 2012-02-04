@@ -209,15 +209,27 @@ AutoPager.prototype.request = function() {
 
     this.lastRequestURL = this.requestURL
     this.showLoading(true)
-    if (Extension.isFirefox()) {
-        extension.postMessage('get', { url:  this.requestURL, fromURL: location.href, charset: document.characterSet, cookie: document.cookie }, function(res) {
-            if (res.responseText && res.finalURL) {
-                self.load(createHTMLDocumentByString(res.responseText), res.finalURL)
-            }
-            else {
-                self.error()
-            }
-        })
+    if (Extension.isFirefox() && isSameDomain(this.requestURL)) {
+        var req = XMLHttpRequest()
+        // In order to prevent cross domain redirection,
+        // we have to meet the condition of CORS preflight request.
+        // Therefore here we register event listener to
+        // XMLHttpRequestUpload object
+        // in order to set `upload events flag` true,
+        // so that `force preflight flag` is true.
+        // see: http://www.w3.org/TR/cors/#cross-origin-request-with-preflight0
+        //    : http://www.w3.org/TR/XMLHttpRequest2#the-send-method
+        req.upload.addEventListener('load', function() {}, false)
+        req.addEventListener('load', function(event) {
+            var doc = event.target.response
+            self.load(doc)
+        }, false)
+        req.addEventListener('error', function() {
+            self.error()
+        }, false)
+        req.open('GET', this.requestURL, true)
+        req.responseType = 'document'
+        req.send(null)
     }
     else {
         loadWithIframe(this.requestURL, function(doc, url) {
