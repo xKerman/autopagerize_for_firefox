@@ -427,8 +427,15 @@ AutoPager.rebootAutoPager = function() {
     if (!ap) {
         return
     }
+    window.removeEventListener('scroll', ap.scroll, false)
+    if (ap.icon) {
+        ap.icon.parentNode.removeChild(ap.icon)
+    }
+    if (ap.messageFrame) {
+        var mf = ap.messageFrame
+        mf.parentNode.removeChild(mf)
+    }
     var info = ap.info
-    ap.terminate()
     ap = new AutoPager(info)
 }
 
