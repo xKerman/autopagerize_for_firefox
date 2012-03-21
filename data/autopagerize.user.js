@@ -197,7 +197,7 @@ AutoPager.prototype.request = function() {
     if (!this.requestURL || this.lastRequestURL == this.requestURL) {
         return
     }
-    if (this.insertPoint.compareDocumentPosition(document) & document.DOCUMENT_POSITION_DISCONNECTED) {
+    if (!document.contains(this.insertPoint)) {
         AutoPager.rebootAutoPager()
         return
     }
